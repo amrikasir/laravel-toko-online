@@ -28,3 +28,13 @@ Route::post('register', 'Api\AuthController@register');
  * create api endpoint for logout
  */
 Route::middleware('mobile')->get('logout', 'Api\AuthController@logout');
+
+/**
+ * create api endpoint to get product list for authenticated user
+ */
+Route::middleware('mobile')->get('products', 'Api\ProductController@index');
+
+/**
+ * create api endpoint to get all categories in ProductController
+ */
+Route::middleware('mobile')->get('categories', 'Api\ProductController@categories');

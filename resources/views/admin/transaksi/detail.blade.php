@@ -88,7 +88,7 @@
                         <tr>
                             <td>Bukti Pembayaran</td>
                             <td>:</td>
-                            <td  class="p-2"><img src="{{ asset('storage/'.$order->bukti_pembayaran) }}" alt="" srcset="" class="img-fluid" width="300"></td>
+                            <td  class="p-2"><img src="{{ $order->bukti_pembayaran }}" alt="" srcset="" class="img-fluid" width="300"></td>
                         </tr>
                         @if($order->status_order_id == 2)
                         <tr>

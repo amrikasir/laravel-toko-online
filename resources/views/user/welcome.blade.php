@@ -64,7 +64,7 @@
             <div class="block-4 text-center">
                 <a href="{{ route('user.produk.detail',['id' =>  $produk->id]) }}">
                 <figure class="block-4-image">
-                <img src="{{ asset('storage/'.$produk->image) }}" alt="Image placeholder" class="img-fluid" width="100%" style="height:300px">
+                <img src="{{ $produk->image }}" alt="Image placeholder" class="img-fluid" width="100%" style="height:300px">
                 </figure>
                 </a>
                 <div class="block-4-text p-4">

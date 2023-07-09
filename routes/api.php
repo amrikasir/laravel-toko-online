@@ -15,26 +15,156 @@ use Illuminate\Support\Facades\Route;
 */
 
 /**
- * create api endpoint for login
+ * api endpoint for login
  */
 Route::post('login', 'Api\AuthController@login');
 
 /**
- * create api endpoint for register
+ * api endpoint for register
  */
 Route::post('register', 'Api\AuthController@register');
 
 /**
- * create api endpoint for logout
+ * route group with prefix product
+ */
+Route::prefix('product')->group(function () {
+    /**
+     * api endpoint to get product list
+     */
+    Route::get('/list', 'Api\ProductController@index');
+
+    /**
+     * api endpoint to get product detail
+     */
+    Route::get('/{id}', 'Api\ProductController@show');
+
+    /**
+     * api endpoint to get all categories in ProductController
+     */
+    Route::get('/categories', 'Api\ProductController@categories');
+    
+    /**
+     * api endpoint to get product by category
+     */
+    Route::get('/category/{id}', 'Api\ProductController@productByCategory');
+});
+
+/**
+ * route group with middleware mobile
+ */
+Route::middleware('mobile')->group(function () {
+    /**
+     * route group with prefix user
+     */
+    Route::prefix('user')->group(function () {
+        /**
+         * api endpoint to get user detail
+         */
+        Route::get('/', 'Api\UserController@show');
+
+        /**
+         * api endpoint to update user detail
+         */
+        Route::post('/', 'Api\UserController@update');
+
+        /**
+         * api endpoint to update user password
+         */
+        Route::post('password', 'Api\UserController@updatePassword');
+    });
+
+    /**
+     * route group with prefix cart
+     */
+    Route::prefix('cart')->group(function () {
+        /**
+         * api endpoint to get cart list
+         */
+        Route::get('/', 'Api\CartController@index');
+
+        /**
+         * api endpoint to add product to cart
+         */
+        Route::post('/', 'Api\CartController@store');
+
+        /**
+         * api endpoint to update cart
+         */
+        Route::post('/{id}', 'Api\CartController@update');
+
+        /**
+         * api endpoint to delete cart
+         */
+        Route::post('/{id}/delete', 'Api\CartController@destroy');
+    });
+
+    /**
+     * route group with prefix address
+     */
+    Route::prefix('address')->group(function () {
+        /**
+         * api endpoint to get address list
+         */
+        Route::get('/', 'Api\AddressController@index');
+
+        /**
+         * api endpoint to add address
+         */
+        Route::post('/', 'Api\AddressController@store');
+
+        /**
+         * api endpoint to get address detail
+         */
+        Route::get('/{id}', 'Api\AddressController@show');
+
+        /**
+         * api endpoint to update address
+         */
+        Route::post('/{id}', 'Api\AddressController@update');
+
+        /**
+         * api endpoint to delete address
+         */
+        Route::post('/{id}/delete', 'Api\AddressController@destroy');
+    });
+
+    /**
+     * route group with prefix order
+     */
+    Route::prefix('order')->group(function () {
+        /**
+         * api endpoint to get order list
+         */
+        Route::get('/', 'Api\OrderController@index');
+
+        /**
+         * api endpoint to add order
+         */
+        Route::post('/', 'Api\OrderController@store');
+
+        /**
+         * api endpoint to get order detail
+         */
+        Route::get('/{id}', 'Api\OrderController@show');
+
+        /**
+         * api endpoint to cancel order
+         */
+        Route::post('/{id}/cancel', 'Api\OrderController@cancel');
+
+        /**
+         * api endpoint to upload payment proof
+         */
+        Route::post('/{id}/proof', 'Api\OrderController@uploadProof');
+
+        /**
+         * api endpoint to confirm order
+         */
+        Route::post('/{id}/confirm', 'Api\OrderController@confirm');
+    });
+});
+
+/**
+ * api endpoint for logout
  */
 Route::middleware('mobile')->get('logout', 'Api\AuthController@logout');
-
-/**
- * create api endpoint to get product list for authenticated user
- */
-Route::middleware('mobile')->get('products', 'Api\ProductController@index');
-
-/**
- * create api endpoint to get all categories in ProductController
- */
-Route::middleware('mobile')->get('categories', 'Api\ProductController@categories');

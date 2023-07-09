@@ -29,7 +29,7 @@
                     
                 <?php $subtotal=0; foreach($keranjangs as $keranjang): ?>
                 <td class="product-thumbnail">
-                    <img src="{{ asset('storage/'.$keranjang->image) }}" alt="Image" class="img-fluid" width="150">
+                    <img src="{{ $keranjang->image }}" alt="Image" class="img-fluid" width="150">
                 </td>
                 <td class="product-name">
                     <h2 class="h5 text-black">{{ $keranjang->nama_produk }}</h2>

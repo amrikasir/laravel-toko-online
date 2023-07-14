@@ -17,7 +17,7 @@ class ProductController extends Controller
         
         // use model when if request has query limit
         $products->when(request()->has('limit'), function ($query) {
-            
+
             // limit the product list
             return $query->limit(request()->limit);
         });
@@ -29,6 +29,13 @@ class ProductController extends Controller
             return $query->offset(request()->page);
         });
         
+        // use model when if request has search query
+        $products->when(request()->has('search'), function ($query) {
+            
+            // search product list by name or description
+            return $query->where('name', 'like', '%' . request()->search . '%')
+                ->orWhere('description', 'like', '%' . request()->search . '%');
+        });
         // get data product list
         $products = $products->get();
         

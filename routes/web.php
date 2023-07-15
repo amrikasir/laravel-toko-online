@@ -84,6 +84,3 @@ Route::group(['middleware' => ['auth','checkRole:customer']],function(){
     Route::get('/order/pembayaran/{id}','user\OrderController@pembayaran')->name('user.order.pembayaran');
     Route::post('/order/kirimbukti/{id}','user\OrderController@kirimbukti')->name('user.order.kirimbukti');
 });
-
-Route::get('/ongkir', 'OngkirController@index');
-Route::get('/ongkir/province/{id}/cities', 'OngkirController@getCities');

@@ -11,12 +11,9 @@ class UserController extends Controller
     /**
      * function to get user detail
      */
-    public function show($id){
-        // find user by id
-        $user = \App\User::find($id);
-
+    public function show(){
         // return user detail in json format
-        return response()->json(['data' => $user]);
+        return response()->json(['data' => auth()->user()]);
     }
 
     /**

@@ -14,6 +14,11 @@ class Order extends Model
 	 * create getter for bukti_pembayaran attribute
 	 */
 	public function getBuktiPembayaranAttribute($value){
+		// return null if $value is null
+		if ($value == null) {
+			return null;
+		}
+		
 		/**
 		 * return $value if $value is url format
 		 */
@@ -25,5 +30,15 @@ class Order extends Model
 		 * return url asset bukti_pembayaran if $value is not url format
 		 */
 		return url('storage/'.$value);
+	}
+
+	// create relationship one to many with table order_detail
+	public function detail(){
+		return $this->hasMany(\App\Detailorder::class,'order_id');
+	}
+
+	// create relationship one to many with table status_order
+	public function status_order(){
+		return $this->belongsTo(\App\Orderstatus::class,'status_order_id');
 	}
 }

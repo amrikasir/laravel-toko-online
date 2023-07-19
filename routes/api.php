@@ -132,6 +132,17 @@ Route::middleware('mobile')->group(function () {
      * route group with prefix order
      */
     Route::prefix('order')->group(function () {
+
+        /**
+         * api endpoint to checkout order
+         */
+        Route::get('/checkout', 'Api\OrderController@checkout');
+
+        /**
+         * api endpoint to confirm checkout order
+         */
+        Route::post('/checkout/confirm', 'Api\OrderController@store');
+
         /**
          * api endpoint to get order list
          */
@@ -139,6 +150,8 @@ Route::middleware('mobile')->group(function () {
 
         /**
          * api endpoint to add order
+         * 
+         * @Deprecated use checkout/confirm instead
          */
         Route::post('/', 'Api\OrderController@store');
 

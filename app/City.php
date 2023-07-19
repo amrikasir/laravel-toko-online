@@ -10,4 +10,9 @@ class City extends Model
 	protected $fillable = [
 		'province_id', 'city_id','title'
 	];
+
+	// relation one to one dengan table provinces
+	public function province(){
+		return $this->belongsTo(\App\Province::class,'province_id','province_id');
+	}
 }

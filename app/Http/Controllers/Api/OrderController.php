@@ -135,7 +135,7 @@ class OrderController extends Controller
             // store data to table detail_order
             \App\Detailorder::create([
                 'order_id' => $order->id,
-                'product_id' => $cart->product_id,
+                'product_id' => $cart->products_id,
                 'qty' => $cart->qty
             ]);
 

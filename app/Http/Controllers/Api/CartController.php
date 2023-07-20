@@ -10,7 +10,8 @@ class CartController extends Controller
     /**
      * function to get cart list
      */
-    public function index(){
+    public function index()
+    {
         // get cart list with model keranjang
         $carts = \App\Keranjang::with('product')->where('user_id', auth()->id())->get();
 
@@ -21,15 +22,16 @@ class CartController extends Controller
     /**
      * function to add product to cart
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // check if product is not found
-        if(!\App\Product::find($request->product_id)){
+        if (!\App\Product::find($request->product_id)) {
             // return error message in json format
             return response()->json(['message' => 'Product not found'], 404);
         }
 
         // check if cart is not found
-        if(\App\Keranjang::where('user_id', auth()->id())->where('products_id', $request->product_id)->first()){
+        if (\App\Keranjang::where('user_id', auth()->id())->where('products_id', $request->product_id)->first()) {
             // return error message in json format
             return response()->json(['message' => 'Product already exists in cart'], 409);
         }
@@ -37,7 +39,7 @@ class CartController extends Controller
         // create cart
         $cart = \App\Keranjang::create([
             'user_id'       => auth()->id(),
-            'products_id'    => $request->product_id,
+            'products_id'   => $request->product_id,
             'qty'           => $request->qty
         ]);
 
@@ -51,7 +53,8 @@ class CartController extends Controller
     /**
      * function to update cart
      */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         // find cart by id
         $cart = \App\Keranjang::find($id);
 
@@ -68,7 +71,8 @@ class CartController extends Controller
     /**
      * function to delete cart
      */
-    public function destroy($id){
+    public function destroy($id)
+    {
         // find cart by id
         $cart = \App\Keranjang::find($id);
 

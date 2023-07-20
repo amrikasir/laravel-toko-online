@@ -83,4 +83,26 @@ class AddressController extends Controller
         // return success message in json format
         return response()->json(['message' => 'Address has been deleted']);
     }
+
+    /**
+     * function to get province list
+     */
+    public function province(){
+        // get province list with model province
+        $provinces = \App\Province::all();
+
+        // return province list in json format
+        return response()->json(['data' => $provinces]);
+    }
+
+    /**
+     * function to get city list by province
+     */
+    public function city($id){
+        // get city list with model city
+        $cities = \App\City::where('province_id', $id)->get();
+
+        // return city list in json format
+        return response()->json(['data' => $cities]);
+    }
 }

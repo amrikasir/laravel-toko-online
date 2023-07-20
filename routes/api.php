@@ -126,6 +126,17 @@ Route::middleware('mobile')->group(function () {
          * api endpoint to delete address
          */
         Route::post('/{id}/delete', 'Api\AddressController@destroy');
+
+        /**
+         * get list province
+         */
+        Route::get('/province', 'Api\AddressController@province');
+
+        /**
+         * get list city by province
+         */
+        Route::get('/city/{id}', 'Api\AddressController@city');
+        
     });
 
     /**

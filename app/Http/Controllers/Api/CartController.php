@@ -29,7 +29,7 @@ class CartController extends Controller
         }
 
         // check if cart is not found
-        if(\App\Keranjang::where('user_id', auth()->id())->where('product_id', $request->product_id)->first()){
+        if(\App\Keranjang::where('user_id', auth()->id())->where('products_id', $request->product_id)->first()){
             // return error message in json format
             return response()->json(['message' => 'Product already exists in cart'], 409);
         }
@@ -37,7 +37,7 @@ class CartController extends Controller
         // create cart
         $cart = \App\Keranjang::create([
             'user_id'       => auth()->id(),
-            'product_id'    => $request->product_id,
+            'products_id'    => $request->product_id,
             'qty'           => $request->qty
         ]);
 

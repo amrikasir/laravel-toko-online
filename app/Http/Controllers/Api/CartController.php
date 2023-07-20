@@ -12,7 +12,7 @@ class CartController extends Controller
      */
     public function index(){
         // get cart list with model keranjang
-        $carts = \App\Keranjang::where('user_id', auth()->id())->get();
+        $carts = \App\Keranjang::with('product')->where('user_id', auth()->id())->get();
 
         // return cart list in json format
         return response()->json(['data' => $carts]);

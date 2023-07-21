@@ -98,7 +98,14 @@ class OrderController extends Controller
      */
     public function index(){
         // get data from table order
-        $order = \App\Order::with(['status_order'])->where('user_id', Auth::user()->id)->get();
+        $order = \App\Order::with(['status_order'])->where('user_id', Auth::user()->id);
+
+        // use when to filter data by status_order_id in query string
+        $order = $order->when(request()->status_order_id, function($query){
+            return $query->where('status_order_id', request()->status_order_id);
+        });
+
+        $order = $order->get();
 
         // return response
         return response()->json([

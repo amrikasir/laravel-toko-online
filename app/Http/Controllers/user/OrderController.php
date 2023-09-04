@@ -48,19 +48,26 @@ class OrderController extends Controller
     public function detail($id)
     {
         //function menampilkan detail order
-        $detail_order = Detailorder::join('products', 'products.id', '=', 'detail_order.product_id')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->select('products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*')
-            ->where('detail_order.order_id', $id)
-            ->get();
-        $order = Order::join('users', 'users.id', '=', 'order.user_id')
-            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
-            ->select('order.*', 'users.name as nama_pelanggan', 'status_order.name as status')
-            ->where('order.id', $id)
-            ->first();
+        // $detail_order = Detailorder::join('products', 'products.id', '=', 'detail_order.product_id')
+        //     ->join('order', 'order.id', '=', 'detail_order.order_id')
+        //     ->select('products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*')
+        //     ->where('detail_order.order_id', $id)
+        //     ->get();
+
+        // $order = Order::join('users', 'users.id', '=', 'order.user_id')
+        //     ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+        //     ->select('order.*', 'users.name as nama_pelanggan', 'status_order.name as status')
+        //     ->where('order.id', $id)
+        //     ->first();
+
+        $order = Order::with(
+            'detail.product',
+            'status_order',
+            'user'
+        )->find($id);
 
         return view('user.order.detail', [
-            'detail' => $detail_order,
+            // 'detail' => $detail_order,
             'order'  => $order
         ]);
     }
@@ -76,7 +83,7 @@ class OrderController extends Controller
         //mengupload bukti pembayaran
         $order = Order::findOrFail($id);
         if ($request->file('bukti_pembayaran')) {
-            $file = $request->file('bukti_pembayaran')->store('buktibayar', 'public');
+            $file = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
 
             $order->bukti_pembayaran = $file;
             $order->status_order_id  = 2;

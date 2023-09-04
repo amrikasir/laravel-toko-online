@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\City;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -22,16 +23,17 @@ class AddressController extends Controller
      * function to add address
      */
     public function store(Request $request){
-        // check if city is exists in City model
-        if(!\App\City::find($request->city_id)){
+        // validate request
+        if(!\App\City::where('city_id', $request->city_id)->first()){
             // return error message in json format
             return response()->json(['message' => 'City not found'], 404);
         }
 
         // create address
-        $address = \App\Alamat::create([
+        $address = \App\Alamat::updateOrCreate([
             'user_id'       => auth()->id(),
-            'city_id'       => $request->city_id,
+        ],[
+            'cities_id'     => $request->city_id,
             'detail'        => $request->detail
         ]);
 

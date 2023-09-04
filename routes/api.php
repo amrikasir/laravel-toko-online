@@ -54,6 +54,24 @@ Route::prefix('product')->group(function () {
  */
 Route::middleware('mobile')->group(function () {
     /**
+     * route to get no rekening
+     */
+    Route::get('rekening', function () {
+        $rek = \App\Rekening::first();
+
+        if ($rek) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $rek
+            ]);
+        }
+        
+        return response()->json([
+            'status' => 'error',
+            'message' => 'No rekening tidak ditemukan'
+        ], 404);
+    });
+    /**
      * route group with prefix user
      */
     Route::prefix('user')->group(function () {
@@ -113,6 +131,11 @@ Route::middleware('mobile')->group(function () {
         Route::post('/', 'Api\AddressController@store');
 
         /**
+         * get list province
+         */
+        Route::get('/province', 'Api\AddressController@province');
+
+        /**
          * api endpoint to get address detail
          */
         Route::get('/{id}', 'Api\AddressController@show');
@@ -123,19 +146,14 @@ Route::middleware('mobile')->group(function () {
         Route::post('/{id}', 'Api\AddressController@update');
 
         /**
-         * api endpoint to delete address
-         */
-        Route::post('/{id}/delete', 'Api\AddressController@destroy');
-
-        /**
-         * get list province
-         */
-        Route::get('/province', 'Api\AddressController@province');
-
-        /**
          * get list city by province
          */
         Route::get('/city/{id}', 'Api\AddressController@city');
+        
+        /**
+         * api endpoint to delete address
+         */
+        Route::post('/{id}/delete', 'Api\AddressController@destroy');
         
     });
 

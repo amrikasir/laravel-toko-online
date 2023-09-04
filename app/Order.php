@@ -41,4 +41,9 @@ class Order extends Model
 	public function status_order(){
 		return $this->belongsTo(\App\Orderstatus::class,'status_order_id');
 	}
+
+	// create relationship one to many with table user
+	public function user(){
+		return $this->belongsTo(\App\User::class,'user_id');
+	}
 }

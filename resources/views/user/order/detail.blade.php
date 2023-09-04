@@ -35,7 +35,7 @@
                         <tr>
                             <th>Status Pesanan</th>
                             <td>:</td>
-                            <td>{{ $order->status }}</td>
+                            <td>{{ $order->status_order->name }}</td>
                         </tr>
                         <tr>
                             <th>Metode Pembayaran</th>
@@ -74,12 +74,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($detail as $o)
+                            @foreach($order->detail as $item)
                             <tr>
-                                <td><img src="{{ asset('storage/'.$o->image) }}" alt="" srcset="" width="50"></td>
-                                <td>{{ $o->nama_produk }}</td>
-                                <td>{{ $o->qty }}</td>
-                                <td>{{ $o->qty * $o->price }}</td>
+                                <td><img src="{{ $item->product->image }}" alt="" srcset="" width="50"></td>
+                                <td>{{ $item->product->name }}</td>
+                                <td>{{ $item->qty }}</td>
+                                <td>{{ $item->qty * $item->product->price }}</td>
                             </tr>
                             @endforeach
                         </tbody>

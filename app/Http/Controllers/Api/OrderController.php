@@ -22,7 +22,8 @@ class OrderController extends Controller
         if (is_null($alamat_toko)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Alamat toko belum diisi, silahkan hubungi admin'
+                'message' => 'Alamat toko belum diisi, silahkan hubungi admin',
+                'code' => 'ALAMAT_TOKO_NOT_FOUND'
             ], 400);
         }
 
@@ -36,7 +37,8 @@ class OrderController extends Controller
         if (is_null($alamat)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Alamat User belum diisi'
+                'message' => 'Alamat User belum diisi',
+                'code' => 'ALAMAT_USER_NOT_FOUND'
             ], 400);
         }
 
@@ -66,7 +68,8 @@ class OrderController extends Controller
         if (is_null($jne_OKE)) {
             return response()->json([
                 'success' => false,
-                'message' => 'LAYANAN OKE TIDAK TERSEDIA UNTUK SAAAT INI'
+                'message' => 'LAYANAN OKE TIDAK TERSEDIA UNTUK SAAAT INI',
+                'code' => 'OKE_NOT_FOUND'
             ], 400);
         }
 
@@ -166,16 +169,39 @@ class OrderController extends Controller
         $detail_order = \App\Detailorder::with('product')->where('order_id', $id)->get();
 
         // get order from model Order
-        $order = \App\Order::with(['status_order'])->where('id', $id)->first();
+        $order = \App\Order::with(['status_order', 'user'])->where('id', $id)->first();
 
+        // get address from model Alamat
+        $alamat = \App\Alamat::with(['city.province'])->where('user_id', Auth::user()->id)->first();
         // return response
         return response()->json([
             'success' => true,
             'message' => 'Detail Order',
             'data' => [
                 'order' => $order,
-                'detail_order' => $detail_order
+                'detail_order' => $detail_order,
+                'alamat' => $alamat
             ]
+        ]);
+    }
+
+    // upload proof
+    public function uploadProof(Request $request){
+
+        // store file to storage/app/public/bukti_pembayaran
+        $path = $request->file('photo')->store('bukti_pembayaran', 'public');
+
+        // update order with invoice
+        \App\Order::where('invoice', $request->invoice)->update([
+            'bukti_pembayaran' => $path,
+            'status_order_id' => 2
+        ]);
+        
+        // get invoice request from new FormData
+        return response()->json([
+            'success' => true,
+            'message' => 'Bukti Pembayaran Berhasil diupload',
+            'data' => $request->invoice
         ]);
     }
 }

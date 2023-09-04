@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        // exclude route simple program from csrf token
+        'sederhana/*'
     ];
 }

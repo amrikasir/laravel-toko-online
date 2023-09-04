@@ -10,8 +10,15 @@
 |
 */
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+
+// route untuk simple program
+Route::get('/sederhana/lihat','SimpleController@index')->name('sederhana');
+// route simpan data simple program
+Route::post('/sederhana/simpan','SimpleController@simpan')->name('sederhana.simpan');
 
 Auth::routes();
 Route::get('/','user\WelcomeController@index')->name('home');
@@ -84,3 +91,4 @@ Route::group(['middleware' => ['auth','checkRole:customer']],function(){
     Route::get('/order/pembayaran/{id}','user\OrderController@pembayaran')->name('user.order.pembayaran');
     Route::post('/order/kirimbukti/{id}','user\OrderController@kirimbukti')->name('user.order.kirimbukti');
 });
+

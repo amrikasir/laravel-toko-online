@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Categories;
+use App\Testimoni;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -92,5 +93,20 @@ class ProductController extends Controller
         $id->delete();
 
         return redirect()->route('admin.product')->with('status', 'Berhasil Mengahapus Produk');
+    }
+
+    /**
+     * list of testimoni product
+     */
+    public function ulasan(Request $request){
+        $limit = $request->limit ?? 10;
+        $page = $request->page ?? 1;
+        $data = Testimoni::with(['user','product'])->orderBy('created_at','desc')->paginate($limit);
+
+        return view('admin.product.ulasan', [
+            'data' => $data,
+            'limit' => $limit,
+            'page' => $page
+        ]);
     }
 }

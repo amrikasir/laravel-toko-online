@@ -38,7 +38,7 @@
 
 			<div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
 			  <div class="site-logo">
-				<a href="index.html" class="js-logo-clone">tacelak</a>
+				<a href="{{ route('home') }}" class="js-logo-clone">tacelak</a>
 			  </div>
 			</div>
 
@@ -137,52 +137,15 @@
 	  <div class="container">
 		<div class="row">
 		  <div class="col-lg-6 mb-5 mb-lg-0">
-			<div class="row">
-			  <div class="col-md-12">
-				<h3 class="footer-heading mb-4">Navigations</h3>
-			  </div>
-			  <div class="col-md-6 col-lg-4">
-				<ul class="list-unstyled">
-				  <li><a href="#">Sell online</a></li>
-				  <li><a href="#">Features</a></li>
-				  <li><a href="#">Shopping cart</a></li>
-				  <li><a href="#">Store builder</a></li>
-				</ul>
-			  </div>
-			  <div class="col-md-6 col-lg-4">
-				<ul class="list-unstyled">
-				  <li><a href="#">Mobile commerce</a></li>
-				  <li><a href="#">Dropshipping</a></li>
-				  <li><a href="#">Website development</a></li>
-				</ul>
-			  </div>
-			  <div class="col-md-6 col-lg-4">
-				<ul class="list-unstyled">
-				  <li><a href="#">Point of sale</a></li>
-				  <li><a href="#">Hardware</a></li>
-				  <li><a href="#">Software</a></li>
-				</ul>
-			  </div>
-			</div>
+			
 		  </div>
 		  <div class="col-md-6 col-lg-6">
 			<div class="block-5 mb-5">
 			  <h3 class="footer-heading mb-4">Contact Info</h3>
 			  <ul class="list-unstyled">
 				<li class="address">Jalan sukses menuju dunia akhirat</li>
-				<li class="phone"><a href="tel://23923929210">+62 3392 3929 210</a></li>
 				<li class="email">sport@gmail.com</li>
 			  </ul>
-			</div>
-
-			<div class="block-7">
-			  <form action="#" method="post">
-				<label for="email_subscribe" class="footer-heading">Subscribe</label>
-				<div class="form-group">
-				  <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
-				  <input type="submit" class="btn btn-sm btn-primary" value="Send">
-				</div>
-			  </form>
 			</div>
 		  </div>
 		</div>

@@ -130,4 +130,23 @@ class TransaksiController extends Controller
 
         return redirect()->route('admin.transaksi.perludikirim')->with('status', 'Berhasil Menginput No Resi');
     }
+
+    /**
+     * get history order
+     */
+    public function history(Request $request){
+        $limit = $request->limit ?? 6;
+        $start = $request->start ?? date('Y-m-d');
+        $end   = $request->end ?? date('Y-m-d');
+
+        $data = Order::where('created_at', '>=', $start . ' 00:00:00')
+            ->where('created_at', '<=', $end . ' 23:59:59')
+            ->with(['status_order', 'user'])->paginate($limit)->appends(request()->query());
+
+        return view('admin.history', [
+            'data'  => $data,
+            'limit' => $limit,
+            'page'  => $request->page ?? 1
+        ]);
+    }
 }

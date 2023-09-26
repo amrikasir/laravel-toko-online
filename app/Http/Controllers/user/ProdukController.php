@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Categories;
+use App\Testimoni;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProdukController extends Controller
@@ -42,6 +44,48 @@ class ProdukController extends Controller
             'produks' => $prod,
             'cari' => $request->cari,
             'total' => $prod->total()
+        ]);
+    }
+
+    /**
+     * simpan ulasan dari user
+     */
+    public function ulasan(Request $request){
+        Testimoni::updateOrCreate(
+            [
+                'user_id' => Auth::user()->id,
+                'produk_id' => $request->product_id
+            ],
+            [
+                'ulasan' => $request->ulasan
+            ]
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Ulasan berhasil disimpan'
+        ]);
+    }
+
+    /**
+     * get ulasan product by id
+     */
+    public function ulasanproduk($id = null){
+
+        if($id == null){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Produk tidak ditemukan'
+            ]);
+        }
+
+        $ulasan = Testimoni::where('produk_id', $id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $ulasan
         ]);
     }
 }

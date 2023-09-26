@@ -46,4 +46,21 @@ class Order extends Model
 	public function user(){
 		return $this->belongsTo(\App\User::class,'user_id');
 	}
+
+	/**
+	 * accessor for metode_pembayaran attribute
+	 */
+	public function getMetodePembayaranAttribute($value){
+		// return null if $value is null
+		if ($value == null) {
+			return null;
+		}
+
+		// return metode pembayaran
+		if ($value == 'trf') {
+			return 'Transfer Bank';
+		}
+
+		return 'cod';
+	}
 }

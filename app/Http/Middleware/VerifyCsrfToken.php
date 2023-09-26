@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         // exclude route simple program from csrf token
-        'sederhana/*'
+        'sederhana/*',
+        'ulasan/simpan'
     ];
 }

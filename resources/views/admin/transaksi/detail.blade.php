@@ -87,6 +87,18 @@
                                         <td>:</td>
                                         <td class="p-2">{{ $order->pesan }}</td>
                                     </tr>
+                                    @if ($order->metode_pembayaran == 'cod' && $order->status_order_id == 2)
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="p-2"><a
+                                                    href="{{ route('admin.transaksi.konfirmasi', ['id' => $order->id]) }}"
+                                                    onclick="return confirm('Yakin ingin mengonfirmasi pesanan ini?')"
+                                                    class="btn btn-primary mt-1">Konfirmasi Orderan COD</a><br>
+                                                <small>Klik tombol ini jika setuju pembeli membayar di tempat</small>
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @if ($order->bukti_pembayaran != null)
                                         <tr>
                                             <td>Bukti Pembayaran</td>

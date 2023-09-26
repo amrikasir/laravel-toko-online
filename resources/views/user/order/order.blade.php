@@ -80,6 +80,7 @@
                     </td>
                     <td>
                     <a href="{{ route('user.order.detail',['id' => $o->id]) }}" class="btn btn-success">Detail</a>
+                    <a href="{{ route('user.order.invoice', ['id' => $o->id]) }}" class="btn btn-primary">Invoice</a>
                     </td>
                 </tr>
                 @endforeach
@@ -114,6 +115,7 @@
                     <td>{{ $o->name }}</td>
                     <td>
                     <a href="{{ route('user.order.detail',['id' => $o->id]) }}" class="btn btn-success">Detail</a>
+                    <a href="{{ route('user.order.invoice', ['id' => $o->id]) }}" class="btn btn-primary">Invoice</a>
                     </td>
                 </tr>
                 @endforeach

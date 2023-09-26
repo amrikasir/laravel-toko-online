@@ -90,7 +90,11 @@ class OrderController extends Controller
 
             $order->save();
         }
-        return redirect()->route('user.order');
+
+        // redirect to invoice page
+        return redirect()->route('user.order.invoice', $id);
+
+        // return redirect()->route('user.order');
     }
 
     public function pembayaran($id)
@@ -134,7 +138,7 @@ class OrderController extends Controller
                     'invoice' => $request->invoice,
                     'user_id' => $userid,
                     'subtotal' => $request->subtotal,
-                    'status_order_id' => 1,
+                    'status_order_id' => 2,
                     'metode_pembayaran' => $request->metode_pembayaran,
                     'ongkir' => $request->ongkir,
                     'biaya_cod' => 10000,
@@ -173,5 +177,19 @@ class OrderController extends Controller
         }
 
         return redirect()->route('user.keranjang');
+    }
+
+    public function invoice(Request $request, $id)
+    {
+        //menampilkan invoice
+        $order = Order::with(
+            'detail.product',
+            'status_order',
+            'user'
+        )->find($id);
+
+        return view('user.order.invoice', [
+            'order' => $order
+        ]);
     }
 }
